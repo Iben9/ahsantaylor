@@ -1,0 +1,815 @@
+/* =========================================
+1. VARIABEL & PENGATURAN UMUM
+   ========================================= */
+   @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap");
+
+   :root {
+       --bg-color: #f6f3ee;
+       --panel: rgba(252, 251, 249, 0.96);
+       --primary: #2c221e;
+       --secondary: #6e5a4f;
+       --text-main: #3d3531;
+       --border-color: #dcd3c7;
+       --soft-surface: #f1ece3;
+       --serif: "Cormorant Garamond", Georgia, serif;
+       --sans: "Plus Jakarta Sans", "Helvetica Neue", Arial, sans-serif;
+   }
+   
+   * {
+       box-sizing: border-box;
+   }
+   
+   html {
+       scroll-behavior: smooth;
+   }
+   
+   body {
+       margin: 0;
+       font-family: var(--sans);
+       font-weight: 300;
+       color: var(--text-main);
+       line-height: 1.8;
+       background-color: var(--bg-color);
+       position: relative;
+       overflow-x: hidden;
+       -webkit-font-smoothing: antialiased;
+   }
+   
+   /* =========================================
+      BACKGROUND FOTO HALUS HALAMAN
+      ========================================= */
+   .page-bg-photo {
+       position: fixed;
+       inset: 0;
+       z-index: -1;
+       display: flex;
+       align-items: center;
+       justify-content: flex-end;
+       padding: 40px;
+       background: linear-gradient(135deg, #f7f4ef 0%, #efe9df 60%, #e7dfd2 100%);
+       pointer-events: none;
+   }
+   
+   .page-bg-photo img {
+       width: auto;
+       height: 82vh;
+       max-width: 48vw;
+       object-fit: contain;
+       opacity: 0.1;
+       filter: sepia(20%) contrast(95%);
+       animation: floatBgSlow 12s ease-in-out infinite alternate;
+   }
+   
+   /* =========================================
+   2. HEADER & NAVIGASI
+      ========================================= */
+   header {
+       background-color: rgba(246, 243, 238, 0.92);
+       backdrop-filter: blur(10px);
+       color: var(--primary);
+       display: flex;
+       flex-wrap: wrap;
+       justify-content: space-between;
+       align-items: center;
+       gap: 14px 40px;
+       padding: 22px 64px;
+       border-bottom: 1px solid var(--border-color);
+       position: sticky;
+       top: 0;
+       z-index: 100;
+       animation: fadeDown 0.8s ease forwards;
+   }
+   
+   header h1 {
+       margin: 0;
+       font-family: var(--serif);
+       font-weight: 500;
+       font-size: 36px;
+       letter-spacing: 0.08em;
+       text-transform: uppercase;
+       line-height: 1;
+       color: var(--primary);
+   }
+   
+   header p {
+       order: 3;
+       flex-basis: 100%;
+       margin: 0;
+       font-size: 12px;
+       letter-spacing: 0.14em;
+       text-transform: uppercase;
+       color: var(--secondary);
+   }
+   
+   nav {
+       margin: 0;
+       display: flex;
+       flex-wrap: wrap;
+       gap: 12px 32px;
+   }
+   
+   nav a {
+       position: relative;
+       color: var(--primary);
+       text-decoration: none;
+       font-weight: 400;
+       font-size: 13px;
+       letter-spacing: 0.14em;
+       text-transform: uppercase;
+       padding-bottom: 4px;
+       transition: color 0.3s ease;
+   }
+   
+   nav a::after {
+       content: "";
+       position: absolute;
+       left: 0;
+       bottom: 0;
+       width: 0;
+       height: 1px;
+       background-color: var(--secondary);
+       transition: width 0.35s ease;
+   }
+   
+   nav a:hover {
+       color: var(--secondary);
+   }
+   
+   nav a:hover::after {
+       width: 100%;
+   }
+   
+   /* =========================================
+   3. HERO SECTION DENGAN BACKGROUND ANIMASI FOTO
+      ========================================= */
+   .hero {
+       position: relative;
+       display: grid;
+       grid-template-columns: 1.1fr 0.9fr;
+       align-items: center;
+       gap: 48px;
+       min-height: 74vh;
+       padding: 56px 64px;
+       color: #f6f3ee;
+       border-bottom: 1px solid var(--border-color);
+       overflow: hidden;
+       background-color: #1c1715;
+   }
+   
+   .hero-bg-animated {
+       position: absolute;
+       inset: 0;
+       z-index: 0;
+       overflow: hidden;
+       pointer-events: none;
+   }
+   
+   .hero-bg-animated img {
+       width: 100%;
+       height: 100%;
+       object-fit: cover;
+       object-position: center 25%;
+       opacity: 0.42;
+       filter: contrast(106%) brightness(0.72);
+       transform-origin: center center;
+       animation: kenBurnsBg 16s ease-in-out infinite alternate;
+   }
+   
+   .hero-bg-overlay {
+       position: absolute;
+       inset: 0;
+       background:
+           linear-gradient(90deg, rgba(24, 19, 17, 0.92) 0%, rgba(28, 22, 19, 0.72) 55%, rgba(24, 19, 17, 0.55) 100%),
+           radial-gradient(circle at 75% 40%, rgba(255, 248, 238, 0.08), transparent 60%);
+       animation: ambientShift 10s ease-in-out infinite alternate;
+   }
+   
+   .hero-content {
+       position: relative;
+       z-index: 1;
+       max-width: 600px;
+   }
+   
+   .hero-eyebrow {
+       display: inline-block;
+       font-size: 12px;
+       letter-spacing: 0.2em;
+       text-transform: uppercase;
+       color: #dfd0c0;
+       margin-bottom: 14px;
+   }
+   
+   .hero h2 {
+       font-family: var(--serif);
+       font-style: italic;
+       font-weight: 400;
+       font-size: clamp(36px, 5vw, 64px);
+       letter-spacing: 0.01em;
+       color: #f6f3ee;
+       margin: 0 0 16px;
+       line-height: 1.12;
+   }
+   
+   .hero p {
+       color: #ebe4da;
+       font-size: 16px;
+       font-weight: 300;
+       letter-spacing: 0.03em;
+       max-width: 46ch;
+       margin: 0 0 28px;
+   }
+   
+   .hero-cta {
+       display: inline-block;
+       padding: 14px 32px;
+       border: 1px solid rgba(246, 243, 238, 0.8);
+       color: #f6f3ee;
+       text-decoration: none;
+       font-size: 12px;
+       font-weight: 400;
+       letter-spacing: 0.18em;
+       text-transform: uppercase;
+       transition: background-color 0.35s ease, color 0.35s ease, transform 0.35s ease;
+   }
+   
+   .hero-cta:hover {
+       background-color: #f6f3ee;
+       color: var(--primary);
+       transform: translateY(-2px);
+   }
+   
+   .hero-visual {
+       position: relative;
+       z-index: 1;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       padding: 16px;
+       background-color: rgba(252, 251, 249, 0.08);
+       backdrop-filter: blur(4px);
+       border: 1px solid rgba(246, 243, 238, 0.22);
+   }
+   
+   .hero-visual img {
+       width: auto;
+       max-width: 100%;
+       max-height: 54vh;
+       height: auto;
+       object-fit: contain;
+       display: block;
+       animation: subtleBreath 8s ease-in-out infinite alternate;
+   }
+   
+   /* =========================================
+   4. KONTEN UTAMA & SECTION
+      ========================================= */
+   main {
+       max-width: 1140px;
+       margin: 56px auto;
+       padding: 0 32px;
+   }
+   
+   section {
+       border-top: 1px solid var(--border-color);
+       padding: 64px 0;
+       margin-bottom: 16px;
+   }
+   
+   section:first-child {
+       border-top: 0;
+   }
+   
+   .editorial-card {
+       background-color: var(--panel);
+       border: 1px solid var(--border-color);
+       padding: 52px 56px;
+       margin: 24px 0 48px;
+       box-shadow: 0 14px 36px rgba(44, 34, 30, 0.05);
+   }
+   
+   .section-header-row {
+       display: flex;
+       justify-content: space-between;
+       align-items: flex-end;
+       flex-wrap: wrap;
+       gap: 12px 24px;
+   }
+   
+   .catalog-meta {
+       display: inline-block;
+       padding: 6px 14px;
+       font-size: 11px;
+       font-weight: 500;
+       letter-spacing: 0.15em;
+       text-transform: uppercase;
+       color: var(--primary);
+       background-color: var(--soft-surface);
+       border: 1px solid var(--border-color);
+   }
+   
+   h2 {
+       font-family: var(--serif);
+       font-weight: 400;
+       color: var(--primary);
+       font-size: 40px;
+       letter-spacing: 0.02em;
+       line-height: 1.2;
+       margin: 0 0 10px;
+   }
+   
+   h3 {
+       font-family: var(--sans);
+       color: var(--secondary);
+       font-size: 12px;
+       font-weight: 500;
+       letter-spacing: 0.16em;
+       text-transform: uppercase;
+       margin-top: 4px;
+       margin-bottom: 12px;
+   }
+   
+   p {
+       max-width: 64ch;
+       font-size: 16px;
+   }
+   
+   /* =========================================
+   5. UI KATALOG KOLEKSI & DAFTAR HARGA (PRICE LIST)
+      ========================================= */
+   .table-wrapper {
+       width: 100%;
+       overflow-x: auto;
+       -webkit-overflow-scrolling: touch;
+       margin-top: 28px;
+       background-color: var(--panel);
+       border: 1px solid var(--border-color);
+       box-shadow: 0 14px 34px rgba(44, 34, 30, 0.06);
+   }
+   
+   table {
+       width: 100%;
+       min-width: 660px;
+       border-collapse: collapse;
+       margin: 0;
+   }
+   
+   th,
+   td {
+       padding: 20px 24px;
+       text-align: left;
+       vertical-align: middle;
+   }
+   
+   th {
+       color: var(--primary);
+       font-weight: 600;
+       font-size: 11px;
+       letter-spacing: 0.16em;
+       text-transform: uppercase;
+       background: linear-gradient(180deg, #f3eee5 0%, #ebe3d5 100%);
+       border-bottom: 1.5px solid var(--primary);
+   }
+   
+   td {
+       border-bottom: 1px solid var(--border-color);
+       font-size: 14.5px;
+       color: var(--text-main);
+       transition: background-color 0.25s ease;
+   }
+   
+   tbody tr:last-child td {
+       border-bottom: 0;
+   }
+   
+   th:last-child,
+   td:last-child {
+       text-align: right;
+       white-space: nowrap;
+   }
+   
+   tbody tr:hover td {
+       background-color: rgba(237, 231, 221, 0.45);
+   }
+   
+   .item-title {
+       font-family: var(--serif);
+       font-size: 21px;
+       font-weight: 600;
+       color: var(--primary);
+       letter-spacing: 0.01em;
+   }
+   
+   .material-pill {
+       display: inline-block;
+       padding: 5px 12px;
+       font-size: 13px;
+       font-weight: 400;
+       color: var(--text-main);
+       background-color: var(--soft-surface);
+       border: 1px solid rgba(110, 90, 79, 0.22);
+   }
+   
+   .color-swatch {
+       display: inline-flex;
+       align-items: center;
+       gap: 8px;
+       font-size: 14px;
+       color: var(--primary);
+   }
+   
+   .dot {
+       width: 10px;
+       height: 10px;
+       border-radius: 50%;
+       display: inline-block;
+       border: 1px solid rgba(44, 34, 30, 0.25);
+   }
+   
+   .dot-taupe { background-color: #b79f87; }
+   .dot-ivory { background-color: #f2ede2; }
+   .dot-espresso { background-color: #3b2820; }
+   
+   .time-badge {
+       display: inline-block;
+       padding: 4px 10px;
+       font-size: 12px;
+       font-weight: 500;
+       letter-spacing: 0.05em;
+       color: var(--secondary);
+       background-color: rgba(110, 90, 79, 0.09);
+       border-bottom: 1px solid rgba(110, 90, 79, 0.35);
+   }
+   
+   .price-tag {
+       display: inline-block;
+       padding: 6px 14px;
+       font-family: var(--sans);
+       font-size: 14px;
+       font-weight: 600;
+       letter-spacing: 0.03em;
+       color: var(--primary);
+       background-color: rgba(237, 231, 221, 0.65);
+       border: 1px solid var(--border-color);
+   }
+   
+   .price-highlight {
+       color: #f6f3ee;
+       background-color: var(--primary);
+       border-color: var(--primary);
+   }
+   
+   /* =========================================
+   6. GALERI LOOKBOOK
+      ========================================= */
+   .lookbook-grid {
+       display: grid;
+       grid-template-columns: repeat(3, 1fr);
+       gap: 32px;
+       margin-top: 40px;
+   }
+   
+   .lookbook-card {
+       background-color: var(--panel);
+       border: 1px solid var(--border-color);
+       display: flex;
+       flex-direction: column;
+       transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+   }
+   
+   .lookbook-card:hover {
+       transform: translateY(-6px);
+       border-color: var(--secondary);
+       box-shadow: 0 18px 40px rgba(44, 34, 30, 0.1);
+   }
+   
+   .lookbook-img-wrap {
+       width: 100%;
+       aspect-ratio: 3 / 4;
+       padding: 14px;
+       overflow: hidden;
+       background-color: #f2efe9;
+       border-bottom: 1px solid var(--border-color);
+       display: flex;
+       align-items: center;
+       justify-content: center;
+   }
+   
+   .lookbook-img-wrap img {
+       width: 100%;
+       height: 100%;
+       object-fit: contain;
+       object-position: center;
+       display: block;
+       margin: 0;
+       transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+   }
+   
+   .lookbook-card:hover .lookbook-img-wrap img {
+       transform: scale(1.04);
+   }
+   
+   .lookbook-info {
+       padding: 24px 24px 28px;
+       display: flex;
+       flex-direction: column;
+       flex-grow: 1;
+   }
+   
+   .lookbook-tag {
+       font-size: 11px;
+       font-weight: 500;
+       letter-spacing: 0.16em;
+       text-transform: uppercase;
+       color: var(--secondary);
+       margin-bottom: 8px;
+   }
+   
+   .lookbook-info h4 {
+       font-family: var(--serif);
+       font-size: 24px;
+       font-weight: 500;
+       color: var(--primary);
+       margin: 0 0 10px;
+       line-height: 1.25;
+   }
+   
+   .lookbook-info p {
+       font-size: 14px;
+       line-height: 1.65;
+       color: var(--text-main);
+       margin: 0;
+   }
+   
+   /* =========================================
+   7. FORMULIR RESERVASI FITTING
+      ========================================= */
+   form {
+       margin-top: 28px;
+       max-width: 600px;
+   }
+   
+   label {
+       display: block;
+       font-weight: 500;
+       font-size: 12px;
+       letter-spacing: 0.14em;
+       text-transform: uppercase;
+       color: var(--secondary);
+   }
+   
+   input,
+   select,
+   textarea {
+       width: 100%;
+       padding: 14px 4px;
+       margin-top: 4px;
+       margin-bottom: 24px;
+       border: 0;
+       border-bottom: 1px solid var(--border-color);
+       border-radius: 0;
+       font-family: inherit;
+       font-size: 15px;
+       font-weight: 300;
+       color: var(--primary);
+       background-color: transparent;
+       transition: border-color 0.3s ease;
+   }
+   
+   input:focus,
+   select:focus,
+   textarea:focus {
+       outline: none;
+       border-bottom-color: var(--primary);
+   }
+   
+   button[type="submit"] {
+       background-color: var(--primary);
+       color: var(--bg-color);
+       border: 1px solid var(--primary);
+       padding: 16px 40px;
+       font-family: inherit;
+       font-size: 12px;
+       font-weight: 500;
+       letter-spacing: 0.18em;
+       text-transform: uppercase;
+       cursor: pointer;
+       transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+   }
+   
+   button[type="submit"]:hover {
+       background-color: transparent;
+       color: var(--primary);
+       transform: translateY(-2px);
+   }
+   
+   /* =========================================
+   8. KEYFRAMES & ANIMASI
+      ========================================= */
+   @keyframes kenBurnsBg {
+       0% {
+           transform: scale(1) translate(0, 0);
+       }
+       50% {
+           transform: scale(1.07) translate(-1.2%, -0.8%);
+       }
+       100% {
+           transform: scale(1.11) translate(1%, -1.4%);
+       }
+   }
+   
+   @keyframes ambientShift {
+       0% {
+           opacity: 0.88;
+       }
+       100% {
+           opacity: 1;
+       }
+   }
+   
+   @keyframes subtleBreath {
+       0% {
+           transform: scale(1);
+       }
+       100% {
+           transform: scale(1.03);
+       }
+   }
+   
+   @keyframes floatBgSlow {
+       0% {
+           transform: translateY(0px);
+       }
+       100% {
+           transform: translateY(-16px);
+       }
+   }
+   
+   @keyframes fadeDown {
+       from {
+           opacity: 0;
+           transform: translateY(-14px);
+       }
+       to {
+           opacity: 1;
+           transform: translateY(0);
+       }
+   }
+   
+   @keyframes fadeUp {
+       from {
+           opacity: 0;
+           transform: translateY(20px);
+       }
+       to {
+           opacity: 1;
+           transform: translateY(0);
+       }
+   }
+   
+   .animate-hero-1 {
+       animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+   }
+   
+   .animate-hero-2 {
+       animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.25s both;
+   }
+   
+   .animate-hero-3 {
+       animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.4s both;
+   }
+   
+   .animate-hero-4 {
+       animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.55s both;
+   }
+   
+   .reveal,
+   .reveal-card {
+       opacity: 1;
+       transform: translateY(0);
+       transition: opacity 0.6s ease, transform 0.6s ease;
+   }
+   
+   /* =========================================
+   9. RESPONSIF (TABLET & MOBILE)
+      ========================================= */
+   @media (max-width: 960px) {
+       .hero {
+           grid-template-columns: 1fr;
+           padding: 48px 32px;
+           gap: 32px;
+       }
+   
+       .hero-visual img {
+           max-height: 44vh;
+       }
+   
+       .lookbook-grid {
+           grid-template-columns: repeat(2, 1fr);
+           gap: 24px;
+       }
+   
+       header {
+           padding: 20px 32px;
+       }
+   }
+   
+   @media (max-width: 700px) {
+       header {
+           position: static;
+           padding: 20px;
+           gap: 12px;
+       }
+   
+       header h1 {
+           font-size: 26px;
+       }
+   
+       header p {
+           font-size: 11px;
+           letter-spacing: 0.1em;
+       }
+   
+       nav {
+           width: 100%;
+           gap: 10px 18px;
+           padding-top: 4px;
+       }
+   
+       nav a {
+           font-size: 12px;
+           letter-spacing: 0.1em;
+       }
+   
+       .hero {
+           padding: 36px 20px;
+           min-height: auto;
+           gap: 24px;
+       }
+   
+       .hero-bg-animated img {
+           object-fit: contain;
+           opacity: 0.28;
+       }
+   
+       .hero-visual img {
+           max-height: 38vh;
+       }
+   
+       .hero p {
+           font-size: 15px;
+       }
+   
+       .page-bg-photo img {
+           height: 55vh;
+           max-width: 80vw;
+           opacity: 0.08;
+       }
+   
+       main {
+           margin: 28px auto;
+           padding: 0 20px;
+       }
+   
+       section {
+           padding: 40px 0;
+       }
+   
+       .editorial-card {
+           padding: 28px 22px;
+           margin: 16px 0 32px;
+       }
+   
+       h2 {
+           font-size: 30px;
+       }
+   
+       .item-title {
+           font-size: 18px;
+       }
+   
+       th,
+       td {
+           padding: 15px 14px;
+           font-size: 13.5px;
+       }
+   
+       .price-tag {
+           padding: 5px 10px;
+           font-size: 13px;
+       }
+   
+       .lookbook-grid {
+           grid-template-columns: 1fr;
+           gap: 24px;
+           margin-top: 28px;
+       }
+   
+       .lookbook-info {
+           padding: 20px;
+       }
+   
+       button[type="submit"] {
+           width: 100%;
+           padding: 16px 24px;
+       }
+   }
